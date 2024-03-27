@@ -87,6 +87,50 @@ Final Grade:{sub.FinalGrade}");
 Final Grade:{sub.FinalGrade}");
             }
         }
+
+
+        //Task
+
+
+        public static void DeserializationWithOptionsMonkey(string json)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            MonkeyList monkeyList = new MonkeyList() { Monkeys = JsonSerializer.Deserialize<List<Monkey>>(json) };
+            
+            foreach (Monkey monkey in monkeyList.Monkeys)
+            {
+                Console.WriteLine($"Name: {monkey.Name}  Location: {monkey.Location} Longitude: {monkey.Longitude}");
+            }
+        }
+
+
+        //Task
+
+
+        public static void Hamarot(Monkey monkey)
+        {
+            string json = JsonSerializer.Serialize(monkey);
+            Hamarot2AndAdd(json);
+        }
+
+        public static void Hamarot2AndAdd(string json)
+        {
+            Monkey monkey = JsonSerializer.Deserialize<Monkey>(json);
+            MonkeyList ml = new MonkeyList();
+            ml.Monkeys = new List<Monkey>();
+            ml.Monkeys.Add(monkey);
+            foreach (Monkey m in ml.Monkeys)
+            {
+                Console.WriteLine($"Name: {monkey.Name}  Location: {monkey.Location} Longitude: {monkey.Longitude}");
+            }
+        }
+
+
+
         static void Main(string[] args)
         {
            
@@ -117,8 +161,16 @@ Final Grade:{sub.FinalGrade}");
             Console.WriteLine("---------------------");
             DeserializationWithPropertyNaming(jsonStr2);
 
-        
-           
+
+            //Tasks
+
+
+            string text = File.ReadAllText(@"../../../monkeydata.json");
+            DeserializationWithOptionsMonkey(text);
+
+            Monkey m = new Monkey() {Name = "lALA", Location ="Israel", Longitude = 1 };
+            Hamarot(m); 
+            //DeserializationWithOptionsMonkey(text);
         }
 
     
